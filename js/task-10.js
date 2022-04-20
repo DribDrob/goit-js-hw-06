@@ -28,23 +28,26 @@ const refs = {
   destroyEl: document.querySelector('[data-destroy]'),
 }
 
-refs.createEl.addEventListener('click', createBoxes);
-refs.amountEl.addEventListener('input', onAmountChange);
-
-function onAmountChange (event){
-const amountOfBoxes = event.currentTarget.value;
-  return amountOfBoxes;}
+refs.createEl.addEventListener("click", () => createBoxes(refs.amountEl.value))
+refs.destroyEl.addEventListener("click", destroyBoxes)
 
 function createBoxes(amount) {
-  console.log(amount);
+ let boxElementsArr = [];
+ 
+  for (let i=0; i<amount; i+=1) {
   const boxEl = document.createElement("div");
+  boxEl.style.backgroundColor = getRandomHexColor();
   boxEl.style.width = '30px';
   boxEl.style.height = '30px';
-  boxEl.style.backgroundColor = getRandomHexColor();
-  refs.boxesEl.appendChild(boxEl);
-}
-// refs.destroyEl.addEventListener('click', destroyBoxes);
 
-// for (let i = 0; i <= 20; i += 5) {
-//   console.log(i);
-// }
+if (i>0){
+  boxEl.style.width =`${(20+i*10)+10}px`;
+  boxEl.style.height = `${(20+i*10)+10}px`;}
+
+boxElementsArr.push(boxEl);}
+
+refs.boxesEl.append(...boxElementsArr);
+}
+function destroyBoxes() {
+    refs.boxesEl.innerHTML='';
+}
